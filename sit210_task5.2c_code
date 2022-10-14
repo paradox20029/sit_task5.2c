@@ -1,0 +1,73 @@
+#armaan chetal
+#roll no 2110994755
+from tkinter import* #tkinter library imported with other libraries
+import tkinter . font
+from gpiozero import LED
+import RPi.GPIO
+RPi.GPIO.setmode(RPi.GPIO.BCM)
+
+#hardware setup
+Redled=LED(10) #10    GPIO pins 10,9,11 for led of differnt colours
+Greenled=LED(9) #9
+Yellowled=LED(11)#11
+
+#GUI DEFINATIONS
+win=Tk() #the window for the GUI created with a title and a font uses the Tk object 
+win.title("LED toggler")
+myFont=tkinter.font.Font(family="Helvetica",size=12,weight="bold")
+
+##Event funcitons
+
+def RedledToggle():     # these are the method for the red, green and yellow led lights 
+    if Redled.is_lit: #is_lit is used to check for the condition whether the led light is on
+        Redled.off()
+        RedledButton["text"]="turn red led on"     #text is printed according to the status of the led
+    else:
+        Redled.on()
+        Greenled.off()
+        RedledButton["text"]="turn Red led off"
+      
+
+
+def GreenledToggle():
+    if Greenled.is_lit:
+        Greenled.off()
+        GreenledButton["text"]="turn green led on"
+    else:
+        Greenled.on()
+        Redled.off()
+        Yellowled.off()
+        GreenledButton["text"]="turn Green led off"
+       
+        
+def YellowledToggle():
+    if Yellowled.is_lit:
+        Yellowled.off()
+        YellowledButton["text"]="turn yellow led on"
+    else:
+        Yellowled.on()
+        Redled.off()
+        Greenled.off()
+        YellowledButton["text"]="turn Yellow led off" 
+
+def close(): #close method created to turn all the led lights off when the exit button is pressed
+    RPi.GPIO.cleanup()
+    Redled.off()
+    Greenled.off()
+    Yellowled.off()
+    win.destroy()
+# the buttons are created for the leds calling the window GUI with a text and font and grid with a row and column
+
+RedledButton=Button(win,text="turn red led on",font=myFont,command=RedledToggle,bg="bisque2",height=1,width=24) #the buttons are used with help of windows
+RedledButton.grid(row=0,column=1)
+
+GreenledButton=Button(win,text="turn green led on",font=myFont,command=GreenledToggle,bg="bisque2",height=1,width=24)
+GreenledButton.grid(row=1,column=1)
+
+YellowledButton=Button(win,text="turn Yellow led on",font=myFont,command=YellowledToggle,bg="bisque2",height=1,width=24)
+YellowledButton.grid(row=2,column=1)
+
+#the exit button is used for switching off all the led
+
+exitButton=Button(win,text="exit",font=myFont,command=close,bg="yellow",height=1,width=6)
+exitButton.grid(row=3,column=1)
