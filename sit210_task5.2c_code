@@ -71,3 +71,6 @@ YellowledButton.grid(row=2,column=1)
 
 exitButton=Button(win,text="exit",font=myFont,command=close,bg="yellow",height=1,width=6)
 exitButton.grid(row=3,column=1)
+
+win.protocol("WM_DELETE_WINDOW",close) #led turns off when window is closed
+win.mainloop()
